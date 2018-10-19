@@ -1,0 +1,5 @@
+{
+    "scripts":{
+        "coder": "hugo server -p 3000 --bind='0.0.0.0' -b https://3000-destroybunglingrhinoceros.cdr.co/ --appendPort=false"
+    }
+}
