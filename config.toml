@@ -8,7 +8,7 @@ canonifyurls    = true
 
 [params]
   title       = "Gogogo"
-  subtitle    = "C'est bon ça !!"
+  subtitle    = "Devenir Datascientist"
   copyright   = "© 2018"
 
   cover       = "img/blog-cover.jpg"
@@ -24,7 +24,7 @@ canonifyurls    = true
   linkedinName = "eueung"
   mediumName = ""
 
-  logo = "hugo-logo.png"
+  logo = "/upload/LogoMakr_8KeMkl.png"
   orgName = "EM"
   orgWebsite = "https://www.telematika.org"
   orgDescription = "Here is a description placeholder for your org"
