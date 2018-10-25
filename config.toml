@@ -8,14 +8,14 @@ canonifyurls    = true
 
 [params]
   title       = "Gogogo"
-  subtitle    = "Devenir Datascientist"
+  subtitle    = "Devenir Data Scientist"
   copyright   = "© 2018"
 
   cover       = "img/blog-cover.jpg"
   description = "Here is a description of your site."
   metaDescription = ""
   googleAnalytics = ""
-  customCSS = []
+  customCSS = ["screen.css"]
   RSSLink = ""
 
   twitterName = "faketryghost"
