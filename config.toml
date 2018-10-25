@@ -7,7 +7,7 @@ paginate        = 6
 canonifyurls    = true
 
 [params]
-  title       = "Gogogo"
+  title       = "Oui Data"
   subtitle    = "Devenir Data Scientist"
   copyright   = "© 2018"
 
@@ -47,7 +47,7 @@ canonifyurls    = true
 
 [[menu.main]]
   name = "Home"
-  url = "/"
+  url = "https://www.ouidata.org"
   weight = 200
 
 [[menu.main]]
