@@ -1,5 +1,5 @@
 ---
-title: "Formation gratuite que doit connaitre un Data Scientist ? "
+title: "Formation"
 date: 2018-10-13T19:00:33+02:00
 draft: false
 image: "/upload/formation.jpeg"
@@ -27,3 +27,13 @@ Vous savez mainteant que vous voulez devenir Data Scientist ? Oui mais par où c
 Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et quelle resource avez vous à votre disposition ? Je vais vous donner un programmepour que vous puissiez monter en compétence rapidement et facilement pour acquérir les bases de la discipline.
 
 # Recevez la formation gratuite
+<br />
+<form name="contact" method="POST" netlify-honeypot="bot-field" netlify>
+  <p class="hidden">
+    <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
+  </p>
+  <p>
+    <label> Email : <input type="email" name="email" /></label> <button type="submit"> Recevoir la formation </button>
+  </p>
+
+</form>
