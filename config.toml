@@ -1,5 +1,5 @@
-baseurl         = "/"
-theme           = "casper-two"
+baseurl         = ""
+theme           = "hugo-casper-two"
 languageCode    = "en-US"
 disqusShortname = ""
 paginate        = 6
@@ -7,15 +7,15 @@ paginate        = 6
 canonifyurls    = true
 
 [params]
-  title       = "Hugo Casper Two"
-  subtitle    = "Port of Casper 2.x for Hugo"
+  title       = "Oui Data"
+  subtitle    = "Devenir Data Scientist"
   copyright   = "© 2018"
 
   cover       = "img/blog-cover.jpg"
   description = "Here is a description of your site."
   metaDescription = ""
   googleAnalytics = ""
-  customCSS = []
+  customCSS = ["screen.css"]
   RSSLink = ""
 
   twitterName = "faketryghost"
@@ -24,7 +24,7 @@ canonifyurls    = true
   linkedinName = "eueung"
   mediumName = ""
 
-  logo = "hugo-logo.png"
+  logo = "/upload/LogoMakr_8KeMkl.png"
   orgName = "EM"
   orgWebsite = "https://www.telematika.org"
   orgDescription = "Here is a description placeholder for your org"
@@ -47,7 +47,7 @@ canonifyurls    = true
 
 [[menu.main]]
   name = "Home"
-  url = "/"
+  url = "https://www.oui"
   weight = 200
 
 [[menu.main]]
