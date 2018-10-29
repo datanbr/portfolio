@@ -69,7 +69,7 @@ Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et que
 }
 
 </style>
-<p style="text-align:center;"> <button id="click_formation" class="myButton">Recevez la formation gratuite</button> </p>
+<button id="click_formation" class="myButton">Recevez la formation gratuite</button>
 
 <script>
     document.getElementById("click_formation").addEventListener("click", function(){
