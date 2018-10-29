@@ -28,24 +28,11 @@ Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et que
 
 # Recevez la formation gratuite
 <br />
-<form name="contact" method="POST" netlify-honeypot="bot-field" netlify>
-  <p class="hidden">
-    <label>Don’t fill this out if you're human: <input name="bot-field" /></label>
-  </p>
-  <p>
-    <label> Email : <input type="email" name="email" /></label> <button type="submit"> Recevoir la formation </button>
-  </p>
 
-</form>
-
-<!-- MailerLite Universal -->
+<a href="javascript:;" onclick="ml_webform_1096142('show')">Click here to show popup</a>
 <script>
-(function(m,a,i,l,e,r){ m['MailerLiteObject']=e;function f(){
-var c={ a:arguments,q:[]};var r=this.push(c);return "number"!=typeof r?r:f.bind(c.q);}
-f.q=f.q||[];m[e]=m[e]||f.bind(f.q);m[e].q=m[e].q||f.q;r=a.createElement(i);
-var _=a.getElementsByTagName(i)[0];r.async=1;r.src=l+'?v'+(~~(new Date().getTime()/1000000));
-_.parentNode.insertBefore(r,_);})(window, document, 'script', 'https://static.mailerlite.com/js/universal.js', 'ml');
-
-var ml_account = ml('accounts', '1310134', 'c4t6p3f3b6', 'load');
+    var ml_webform_1096142 = ml_account('webforms', '1096142', 'k3i6y6', 'load');
+    ml_webform_1096142('animation', 'fadeIn');
 </script>
-<!-- End MailerLite Universal -->
+
+
