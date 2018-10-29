@@ -28,11 +28,11 @@ Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et que
 
 # Recevez la formation gratuite
 <br />
-
-<a href="javascript:;" onclick="ml_webform_1096142('show')">Click here to show popup</a>
 <script>
     var ml_webform_1096142 = ml_account('webforms', '1096142', 'k3i6y6', 'load');
     ml_webform_1096142('animation', 'fadeIn');
 </script>
+<a href="javascript:;" onclick="ml_webform_1096142('show')">Recevez la formation</a>
+
 
 
