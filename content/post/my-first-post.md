@@ -26,59 +26,6 @@ Vous savez mainteant que vous voulez devenir Data Scientist ? Oui mais par où c
 
 Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et quelle resource avez vous à votre disposition ? Je vais vous donner un programmepour que vous puissiez monter en compétence rapidement et facilement pour acquérir les bases de la discipline.
 
-<style>
-.myButton {
-  -moz-box-shadow: 0px 0px 0px 0px #fff6af;
-  -webkit-box-shadow: 0px 0px 0px 0px #fff6af;
-  box-shadow: 0px 0px 0px 0px #fff6af;
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
-  background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-  background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-  background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-  background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
-  background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
-  background-color:#ffec64;
-  -moz-border-radius:17px;
-  -webkit-border-radius:17px;
-  border-radius:17px;
-  border:4px solid #ffaa22;
-  display:inline-block;
-  cursor:pointer;
-  color:#333333;
-  font-family:Arial;
-  font-size:28px;
-  font-weight:bold;
-  padding:18px 46px;
-  text-decoration:none;
-  text-shadow:0px 0px 0px #ffee66;
-}
-.myButton:hover {
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
-  background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-  background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-  background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-  background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
-  background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
-  background-color:#ffab23;
-}
-.myButton:active {
-  position:relative;
-  top:1px;
-}
-
-</style>
-<button id="click_formation" class="myButton">Recevez la formation gratuite</button>
-
-<script>
-    document.getElementById("click_formation").addEventListener("click", function(){
-      var ml_webform_1096142 = ml_account('webforms', '1096142', 'k3i6y6', 'load');
-      ml_webform_1096142('animation', 'fadeIn');
-      ml_webform_1096142('show');
-    });
-</script>
-
 <!-- Begin Mailchimp Signup Form -->
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
 <style type="text/css">
@@ -89,11 +36,11 @@ Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et que
 <div id="mc_embed_signup">
 <form action="https://ouidata.us19.list-manage.com/subscribe/post?u=36676c7258b0bdca5a45c0952&amp;id=7844a18504" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
     <div id="mc_embed_signup_scroll">
-  <label for="mce-EMAIL">Formation gratuite</label>
+  <label for="mce-EMAIL" style="font-size:3em; color:red;">Entrez votre adresse email pour débuter dans la Data Science</label>
   <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
     <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_36676c7258b0bdca5a45c0952_7844a18504" tabindex="-1" value=""></div>
-    <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+    <div class="clear"><input type="submit" value="RECEVER LA FORMATION GRATUITE" name="subscribe" id="mc-embedded-subscribe" class="button", style="background-color:blue;"></div>
     </div>
 </form>
 </div>
