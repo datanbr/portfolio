@@ -3,7 +3,7 @@ title: "Formation gratuite que doit connaitre un Data Scientist ? "
 date: 2018-10-13T19:00:33+02:00
 draft: false
 image: "/upload/formation.jpeg"
-tags: ["project"]
+tags: ["formation"]
 ---
 
 # 7 jours de conseils gratuits pour comprendre ce que vous devez apprendre pour devenir un Data Scientist

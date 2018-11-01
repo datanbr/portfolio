@@ -18,11 +18,11 @@ canonifyurls    = true
   customCSS = ["screen.css"]
   RSSLink = ""
 
-  twitterName = "faketryghost"
-  fbName = "fakeghost"
-  githubName = "eueung"
-  linkedinName = "eueung"
-  mediumName = ""
+  #twitterName = "faketryghost"
+  #fbName = "fakeghost"
+  #githubName = "eueung"
+  linkedinName = "nicolasbrunn"
+  #mediumName = ""
 
   logo = "/upload/LogoMakr_8KeMkl.png"
   orgName = "EM"
@@ -31,11 +31,11 @@ canonifyurls    = true
 
   showSupport = true
 
-  author = "EM"
-  authorAvatar = "img/ghost-icon.png"
-  authorLocation = "Bandung, ID"
+  author = "Nicolas Br"
+  authorAvatar = "upload/photo.JPG"
+  authorLocation = "La Défense"
   authorWebsite = "https://eueung.github.io"
-  authorDescription = "Your description here"
+  authorDescription = "Data Scientist"
 
   pageNotFoundTitle = "404 - Page not found"
 
@@ -47,22 +47,22 @@ canonifyurls    = true
 
 [[menu.main]]
   name = "Home"
-  url = "https://www.oui"
+  url = "/"
   weight = 200
 
-[[menu.main]]
-  name = "Go"
-  url = "/tags/golang/"
-  weight = 100
+#[[menu.main]]
+#  name = "Go"
+#  url = "/tags/golang/"
+#  weight = 100
 
-[[menu.main]]
-  name = "Categories"
-  url = "/categories/"
-  weight = 99
+#[[menu.main]]
+#  name = "Categories"
+#  url = "/categories/"
+#  weight = 99
 
-[[menu.main]]
-  name = "External"
-  url = "https://google.com/"
-  weight = 95
+# [[menu.main]]
+#  name = "External"
+#  url = "https://google.com/"
+#  weight = 95
 
 
