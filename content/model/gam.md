@@ -10,11 +10,17 @@ tags: ["project"]
 # Présentation des différentes commandes à connaitre pour utiliser un modèle GAM
 
 ### Création d'un modèle avec des variables facteur
+```r
 model4b <- gam(hw.mpg ~ s(weight, by = fuel) + fuel, data = mpg, method = "REML")
+```
 
 ### Création d'un modèle avec des variables facteur liés les unes entre elles
+```r
 model4c <- gam(hw.mpg ~ s(weight, fuel, bs = "fs"),data = mpg,method = "REML")
+```
 
 ### Représentation des données en 3d
+```r
 plot(model4c)
 vis.gam(model4c, theta = 125, plot.type = "persp")
+```
