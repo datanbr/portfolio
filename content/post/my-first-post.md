@@ -3,7 +3,7 @@ title: "Formation gratuite que doit connaitre un Data Scientist ? "
 date: 2018-10-13T19:00:33+02:00
 draft: false
 image: "/upload/formation.jpeg"
-tags: ["formation"]
+tags: ["project"]
 ---
 
 # 7 jours de conseils gratuits pour comprendre ce que vous devez apprendre pour devenir un Data Scientist
@@ -40,6 +40,7 @@ Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et que
   <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required>
     <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
     <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_36676c7258b0bdca5a45c0952_7844a18504" tabindex="-1" value=""></div>
+    <meta http-equiv="refresh" content="0;URL=https://www.ouidata.org/formation/merci"/>
     <div class="clear"><input type="submit" value="RECEVER LA FORMATION GRATUITE" name="subscribe" id="mc-embedded-subscribe" class="button", style="background-color:blue;"></div>
     </div>
 </form>
