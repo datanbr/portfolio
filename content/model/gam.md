@@ -30,6 +30,14 @@ model4b <- gam(hw.mpg ~ s(weight, by = fuel) + fuel, data = mpg, method = "REML"
 model4c <- gam(hw.mpg ~ s(weight, fuel, bs = "fs"),data = mpg,method = "REML")
 ```
 
+### Intéraction entre des variables n'ayant pas la même dimension ou pas la même unité
+
+l'intéraction by et bs marchent bien si les intéractions entre les modèles sont de même natures. Par contre ce n'est pas le cas si elles sont de nature différentes
+
+```r
+gam(y ~ te(x1, x2, k = c(10, 20)), data = data, method = "REML") # on définit nous meme les paramètres smooth
+gam(y ~ s(x1) + s(x2) + ti(x1, x2), data = data, method = "REML") # on laisse le modèle le faire tout seul
+```
 
 
 ## Visualisation de modèles
@@ -37,6 +45,11 @@ model4c <- gam(hw.mpg ~ s(weight, fuel, bs = "fs"),data = mpg,method = "REML")
 ### Visualisation de bases
 ```r
 plot(mod_2d)
+```
+
+### Visualisation du modèle sur une meme page
+```r
+plot(mod_2d, pages = 1)
 ```
 
 
