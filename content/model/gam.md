@@ -99,3 +99,14 @@ vis.gam(g, view = c("x1","x2"), plot.type = "contour", color = "gray")
 vis.gam(g, view = c("x1","x2"), plot.type = "contour", contour.col = "blue")
 vis.gam(g, view = c("x1","x2"), plot.type = "contour", nlevels = 20)
 ```
+
+## GAM pour la classification
+
+GAM peut être utilisée pour faire de la classification en utlisant des fonctions log. Tout ceci est caché et il ne faut faire que family = binomial pour y arriver
+
+```r
+# permet de nourrir un modèle et de dire à GAM qu'on veut un pourcentage sur le oui ou non
+gam(y ~ x1 + s(x2), data = dat, family = binomial, method = "REML")
+
+on utilise lors plogis du résultat pour avoir le pourcentage de réponse positive, si x1 et x2 sont dans la normale
+```
