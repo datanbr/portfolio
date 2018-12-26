@@ -52,7 +52,7 @@ canonifyurls    = true
 
 [[menu.main]]
   name = "Model"
-  url = "/model/"
+  url = "/model/regression"
   weight = 100
 
 #[[menu.main]]
