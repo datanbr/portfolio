@@ -51,6 +51,21 @@ newchirps # permet d'avoir le résultat
 
 ```
 
+## Calcul du RMSE et du R²
+
+```r
+function(predcol, ycol) {
+  res = predcol-ycol
+  sqrt(mean(res^2))
+}
+
+function(predcol, ycol) {
+  tss = sum( (ycol - mean(ycol))^2 )
+  rss = sum( (predcol - ycol)^2 )
+  1 - rss/tss
+}
+```
+
 ## R²
 
 R² permet de comparer les performances du modèle avec la moyenne des valeurs à prévoir :
@@ -67,13 +82,45 @@ R² permet de savoir si on fait de l'overfitting en comparant :
 * le R² de la période d'apprentissage
 * le R² de la période de validation
 
+## Cross validation
+
+On peut faire du cross validation à la main ou en utilisant directement vtreat::kWayCrossValidation
+
 ```r
 library(vtreat)
+# nRows : nombre de lignes de l'apprentissage
+# nsplit : le nombre de partition
 splitPlan <- kWayCrossValidation(nRows, nSplits, NULL, NULL)
 ```
-nRows : nombre de lignes de l'apprentissage
-nsplit : le nombre de partition
 
+
+kWayCrossValidation renvoie un tableau d'objet contenant à chaque fois :
+- $train
+- $app
+
+Il s'utilise directement en mettant splitPlan dans la dataframe
+
+
+```r
+library(vtreat)
+splitPlan <- kWayCrossValidation(10, 3, NULL, NULL)
+splitPlan[[1]]
+## $train
+## [1] 1 2 4 5 7 9 10
+##
+## $app
+## [1] 3 6 8
+
+#on entraine le modèle modèle
+split <- splitPlan[[1]]
+model <- lm(fmla, data = df[split$train,])
+
+#on prédit les donnéées sur la période de validation
+df$pred.cv[split$app] <- predict(model, newdata = df[split$app,])
+
+```
+
+Utilisation en production
 ```r
 k <- 3 # Number of folds
 mpg$pred.cv <- 0
@@ -84,49 +131,17 @@ for(i in 1:k) {
   mpg$pred.cv[split$app] <- predict(model, newdata = mpg[split$app,])
 }
 ```
-Cela renvoie un tableau d'objet contenant à chaque fois :
-- $train
-- $app
 
-Il s'utilise directement en mettant splitPlan dans la dataframe
+## catégorie : variable factor
 
+Lm ne gère pas directement les factor mais transforme les valeurs en numérique avec autant de colonne par type de données
 
 ```r
-library(vtreat)
-splitPlan <- kWayCrossValidation(10, 3, NULL, NULL)
-
-splitPlan[[1]]
-## $train
-## [1] 1 2 4 5 7 9 10
-##
-## $app
-## [1] 3 6 8
-```
-
-```r
-#on entraine le modèle modèle
-split <- splitPlan[[1]]
-model <- lm(fmla, data = df[split$train,])
-
-#on prédit les donnéées sur la période de validation
-df$pred.cv[split$app] <- predict(model, newdata = df[split$app,])
-
-function(predcol, ycol) {
-  res = predcol-ycol
-  sqrt(mean(res^2))
-}
-
-function(predcol, ycol) {
-  tss = sum( (ycol - mean(ycol))^2 )
-  rss = sum( (predcol - ycol)^2 )
-  1 - rss/tss
-}
-```
-
 on peut savoir comment une formule est interprété (pour des variables factor) :
 (fmla <- formula("Flowers ~ Intensity + Time"))
-# Use fmla and model.matrix to see how the data is represented for modeling
 mmat <- model.matrix(fmla, flowers)
+```
+
 
 ## Intéraction entre les variables
 ```r
