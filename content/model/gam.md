@@ -106,7 +106,8 @@ GAM peut être utilisée pour faire de la classification en utlisant des fonctio
 
 ```r
 # permet de nourrir un modèle et de dire à GAM qu'on veut un pourcentage sur le oui ou non
-gam(y ~ x1 + s(x2), data = dat, family = binomial, method = "REML")
+temp_gam = gam(y ~ x1 + s(x2), data = dat, family = binomial, method = "REML")
 
 on utilise lors plogis du résultat pour avoir le pourcentage de réponse positive, si x1 et x2 sont dans la normale
+plogis(coef(temp_gam))
 ```
