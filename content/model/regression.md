@@ -54,6 +54,7 @@ newchirps # permet d'avoir le résultat
 ## R²
 
 R² permet de comparer les performances du modèle avec la moyenne des valeurs à prévoir :
+
 * plus R² est proche de 1, meilleur est la prévision
 * plus R² est proche de 0, plus la prévision se rapproche de la moyenne et n'est donc pas intéressante
 
@@ -62,8 +63,9 @@ R² se calcule par 1-RMSE/RME
 Dans le cas de modèle linéaire, on a cor(prevu, vrai élément)² = R²
 
 R² permet de savoir si on fait de l'overfitting en comparant :
- * le R² de la période d'apprentissage
- * le R² de la période de validation
+
+* le R² de la période d'apprentissage
+* le R² de la période de validation
 
 ```r
 library(vtreat)
