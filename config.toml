@@ -52,7 +52,7 @@ canonifyurls    = true
 
 [[menu.main]]
   name = "Model"
-  url = "/tags/model/"
+  url = "/model/"
   weight = 100
 
 #[[menu.main]]
