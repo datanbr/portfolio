@@ -9,6 +9,7 @@ tags: ["project"]
 
 # Regression linéaire
 
+## Création de formule
 ```r
 #Une regression linéaire basique :
 cmodel <- lm(temperature ~ chirps_per_sec, data = cricket)
@@ -22,8 +23,9 @@ fmla_1 <- as.formula("temperature ~ chirps_per_sec")
 cmodel <- lm(fmla_1, data = cricket)
 ```
 
+## Résumé
+
 ```r
-# Pour avoir le résumté :
 # on affiche le modèle
 cmodel
 (Intercept) valeur quand toutes les données sont à 0
@@ -35,13 +37,7 @@ broom::glance(cmodel)
 sigr::wrapFTest(cmodel)
 ```
 
-```r
-#
-
-On regarde le R-squared, qui correspond au rapport sommes (valeur(i) - valeur prédit(i))² / (valeur(i) - valeur moyenne)²
-```
-
-# pour faire une prévision avec le modèle
+## Prévision avec le modèle
 
 ```r
 # on utilise predict, qui renvoie par défaut les valeurs prédit par le modèle pour lesquels le modèle a appris
@@ -58,16 +54,16 @@ newchirps # permet d'avoir le résultat
 ## R²
 
 R² permet de comparer les performances du modèle avec la moyenne des valeurs à prévoir :
-- plus R² est proche de 1, meilleur est la prévision
-- plus R² est proche de 0, plus la prévision se rapproche de la moyenne et n'est donc pas intéressante
+* plus R² est proche de 1, meilleur est la prévision
+* plus R² est proche de 0, plus la prévision se rapproche de la moyenne et n'est donc pas intéressante
 
 R² se calcule par 1-RMSE/RME
 
 Dans le cas de modèle linéaire, on a cor(prevu, vrai élément)² = R²
 
 R² permet de savoir si on fait de l'overfitting en comparant :
-- le R² de la période d'apprentissage
-- le R² de la période de validation
+ * le R² de la période d'apprentissage
+ * le R² de la période de validation
 
 ```r
 library(vtreat)
