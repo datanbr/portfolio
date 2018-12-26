@@ -50,10 +50,10 @@ canonifyurls    = true
   url = "/"
   weight = 200
 
-#[[menu.main]]
-#  name = "Go"
-#  url = "/tags/golang/"
-#  weight = 100
+[[menu.main]]
+  name = "Model"
+  url = "/tags/model/"
+  weight = 100
 
 #[[menu.main]]
 #  name = "Categories"
