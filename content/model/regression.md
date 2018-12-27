@@ -197,3 +197,173 @@ alcohol %>%
 1 pred_add          1.17
 2 pred_interaction  1.60
 ```
+
+
+## Transformation des valeurs à prévoir
+
+Lorque on doit prévoir des valeurs très condensées avec une longue tail, on a souvent :
+
+* moyenne >> mediane
+
+Dans ce cas la prévision va avoir tendance à être surestimé
+Pour résoudre le problème :
+
+* on prévoi log(Y)
+* on applique exp(de la prévision) pour revenir à des valeurs cohérentes
+
+```r
+model <- lm(log(y) ~ x, data = train)
+logpred <- predict(model, data = test)
+pred <- exp(logpred)
+```
+
+Une nouvelle grandeur à calculer est le RMS relatif erreur : sqrt(prev - Y)²/Y
+
+```r
+test %>%
++ mutate(pred = predict(modIncome, newdata = test),
++ err = pred - Income) %>%
++ summarize(rmse = sqrt(mean(err^2)),
++ rms.relerr = sqrt(mean((err/Income)^2)))
+```
+
+## Log model:
+
+* Plus petit RMS-relative error
+* Plus large RMSE
+
+Modelisation de phénomène non linéaire par lm
+
+On peut modifier les données d'entrée du modèle notamment en faisant des log(X) ou des mises en puissances
+Pour la mise en puissance, on utilise I(X^2) car le ^ est un symbol exprimant l'intéraction
+
+```r
+head(houseprice)
+size price
+1   72   156
+2   98   153
+3   92   230
+4   90   152
+5   44    42
+6   46   157
+
+
+model_lin <- lm(price ~ size, data = houseprice)
+(fmla_sqr <- as.formula("price ~ I(size^2)"))
+model_sqr <- lm(fmla_sqr, data = houseprice)
+
+houseprice %>%
+    mutate(pred_lin = predict(model_lin),       # predictions from linear model
+           pred_sqr = predict(model_sqr)) %>%   # predictions from quadratic model
+    gather(key = modeltype, value = pred, pred_lin, pred_sqr) %>% # gather the predictions
+    ggplot(aes(x = size)) +
+       geom_point(aes(y = price)) +                   # actual prices
+       geom_line(aes(y = pred, color = modeltype)) + # the predictions
+       scale_color_brewer(palette = "Dark2")
+```
+
+## Regression logistic
+
+Une regression logistic correspond à une somme pondérée binomiale
+le modèle calcule les coefficients de chaque binome
+Cela permet de faire de la classification
+glm est utilisé pour cela et fonctionne comme lm :
+
+* formule
+* data
+* famille : binomial (distribution des erreurs)
+
+Pour avoir la réponse, on utilise le type = response
+
+```r
+model <- glm(has_dmd ~ CK + H, data = train, family = binomial)
+test$pred <- predict(model, newdata = test, type = "response")
+```
+
+Pour évaluler les performances du modèle, on utilise le pseudo R² = 1 - deviance / null.deviance
+Plus la modélisation est bonne, plus le pseudo R² est proche de 1
+
+On utilise pour le calculer :
+
+* broom::glance
+* sigr::wrapChiSqTest()
+
+```r
+glance(model) %>%
++ summarize(pR2 = 1 - deviance/null.deviance)
+
+wrapChiSqTest(model)
+
+test %>%
++ mutate(pred = predict(model, newdata = test, type = "response")) %>%
++ wrapChiSqTest("pred","has_dmd", TRUE)
+```
+
+On peut encore utiliser le Gain curve plot pour voir la performance du modèle
+
+```r
+GainCurvePlot(test,"pred","has_dmd","DMD model on test")
+```
+
+## Modèle de Poisson ou de quasi poisson
+
+Dans le cas où le Y a modélisé :
+
+* est toujours positif
+* s'accroit avec le temps
+* la sortie est un entier
+
+Par exemple on compte des choses :
+
+* des ventes pour un magasin
+* des jours où une personne est absente
+* des nombres de visite sur une page
+
+On peut utiliser une modélisation de poisson ou de quasi poisson :
+
+* poisson si la moyenne est à peu près égale à la variance
+* quasipoisson si ce n'est pas le cas
+
+Pour nourrir le modèle avec quasipoisson ou poisson
+
+```r
+fmla <- cnt ~ hr + holiday + workingday +
++ weathersit + temp + atemp + hum + windspeed
+> model <- glm(fmla, data = bikesJan, family = quasipoisson)
+```
+Pour valider que les prédictions sont OK
+
+```r
+glance(model) %>%
++ summarize(pseudoR2 = 1 - deviance/null.deviance)
+```
+Lancer la prévision
+```r
+predict(model, newdata = bikesFeb, type = "response")
+```
+
+
+Pour générer variable dynamiquement
+```r
+vars = names(bikesJuly)[1:8]
+outcome = names(bikesJuly)[1]
+
+# Create the formula string for bikes rented as a function of the inputs
+(fmla <- paste(outcome, "~", paste(vars, collapse = " + ")))
+```
+
+## Modèle GAM
+
+On peut utiliser les modèles GAM si on ne sait pas comment modéliser à priori le processus sous la forme de binome
+on spécifie la famille à GAM en fonction du type de problème :
+
+* gaussian (default): "regular" regression
+* binomial: probabilities
+* poisson/quasipoisson: counts
+
+gam(formula, family, data)
+
+On utilise s() pour indiquer à GAM de faire une regression non linéaire, qui marche uniquement sur des variables continues
+```r
+model <- gam(anx ~ s(hassles), data = hassleframe, family = gaussian)
+```
