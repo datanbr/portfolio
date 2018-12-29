@@ -367,3 +367,158 @@ On utilise s() pour indiquer à GAM de faire une regression non linéaire, qui m
 ```r
 model <- gam(anx ~ s(hassles), data = hassleframe, family = gaussian)
 ```
+
+## Vision intéressante de 2 prévisions
+
+```r
+head(soybean_long)
+    Plot Variety Year Time  weight modeltype      pred
+1 1988F1       F 1988   42  3.5600  pred.lin  5.708655
+2 1988F1       F 1988   56  8.7100  pred.lin  9.797968
+3 1988F1       F 1988   70 16.3417  pred.lin 13.887281
+4 1988F2       F 1988   14  0.1040  pred.lin -2.469970
+5 1988F2       F 1988   42  2.9300  pred.lin  5.708655
+6 1988F2       F 1988   77 17.7467  pred.lin 15.931937
+
+# Compare the predictions against actual weights on the test data
+soybean_long %>%
+  ggplot(aes(x = Time)) +                          # the column for the x axis
+  geom_point(aes(y = weight)) +                    # the y-column for the scatterplot
+  geom_point(aes(y = pred, color = modeltype)) +   # the y-column for the point-and-line plot
+  geom_line(aes(y = pred, color = modeltype, linetype = modeltype)) + # the y-column for the point-and-line plot
+
+```
+
+## Arbre
+
+Il y a 2 grands modèles d'arbre à connaitre :
+- Random Forrest
+- Xgboost
+
+Ce type d'algo permet de modéliser des relations nons linéaires. il est très bon pour :
+- prévoir des intervales
+- des relations non monotones
+
+Les arbres déterminent des grandes régions plutot que des relations linéaires
+
+## Random Forrest
+
+L'algo du random Forest passe par :
+- la selection au hasard d'une partie des données
+- la création d'un arbre en selectionnant les meilleures variables à chaque noeud
+- on évalue tous les arbres et on prend le meilleur
+
+```r
+model <- ranger(fmla, bikesJan,
++ num.trees = 500,
++ respect.unordered.factors = "order")
+
+# Si on veut pouvoir reproduire un cas, on doit d'abord fixer le hasard et ensuite l'utiliser
+seed
+(bike_model_rf <- ranger(fmla, # formula
+                         bikesJuly, # data
+                         num.trees = 500,
+                         respect.unordered.factors = "order",
+                         seed = seed))
+
+num.trees = 500 # au moins à 200
+respect.unordered.factors # permet d'indiquer au modèle comment gérer les factors.
+On peut mettre order ou safe
+```
+On peut avoir la prévision en faisant
+bikesFeb$pred <- predict(model, bikesFeb)$predictions
+
+On peut avoir le RMSE directement en faisant un
+```r
+bikesAugust %>%
+  mutate(residual = pred - cnt)  %>% # calculate the residual
+  summarize(rmse  = sqrt(mean(residual^2)))      # calculate rmse
+```
+
+## Préaparation des données pour Xgboost
+
+Xgboost ne sait pas gérer les données non numériques
+il faut donc les transformer avant de lui envoyer les données
+Cela passe par vtreat:
+- designTreatmentsZ() pour préparer un plan de traitement
+- preparer() pour cleaner les data
+
+```r
+#on selectionne les données à modifier
+vars <- c("x","u")
+treatplan <- designTreatmentsZ(dframe, varslist, verbose = FALSE)
+
+scoreFrame <- treatplan$scoreFrame %>%
++ select(varName, origName, code))
+(newvars <- scoreFrame %>%
++ filter(code %in% c("clean","lev")) %>%
++ use_series(varName))
+
+#newvars contient les données
+training.treat <- prepare(treatmentplan, dframe, varRestriction = newvars)
+```
+
+## Xgboost
+
+Xgboost crée des arbres superficiels pour coller à la courbe
+Il peut très rapidement faire de l'overfitting car il se base sur les données d'entrée
+
+```r
+xgb.cv() avec un grand nombre d'arbres (correspondant au nombre de fois où le script tourne)
+xgb.cv()$evaluation_log enregistre à chaque round le rmse. Cela permet de trouver le meilleur nombre d'arbres à selectionner
+xgboost() prend en entrée xgb.cv
+```
+
+On prépare les datas
+
+```r
+treatplan <- designTreatmentsZ(bikesJan, vars)
+> newvars <- treatplan$scoreFrame %>%
++ filter(code %in% c("clean","lev")) %>%
++ use_series(varName)
+> bikesJan.treat <- prepare(treatplan, bikesJan, varRestriction = newvars)
+```
+
+Les données pour Xgboost sont :
+
+* Données d'entrée : as.matrix(bikesJan.treat)
+* Données de sortie : bikesJan$cnt
+
+Calcul de la meilleur profondeur
+
+```r
+library(xgboost)
+cv <- xgb.cv(data = as.matrix(bikesJan.treat),
++ label = bikesJan$cnt,
++ objective = "reg:linear",
++ nrounds = 100, nfold = 5, eta = 0.3, max_depth = 6)
+data : données d'entrée X
+lable : données à prévoir
+objective : indique le type de regression. On a ici des données qui évoluent linéairement
+nrounds : maximum nombre de round, ici 100 car on ne le connait pas
+nfold : nombre de cross validation
+eta : pourcentage d'apprentissage
+max_depth : maximm de profondeur pour chaque arbre
+early_stopping_rounds: Aprè combien de round on stope sans amélioration
+verbose: 0 fait le traitement en silence
+
+Pour déterminer le min de profondeur, on fait
+elog <- as.data.frame(cv$evaluation_log)
+nrounds <- which.min(elog$test_rmse_mean)
+```
+
+Lancement du modèle
+
+```r
+model <- xgboost(data = as.matrix(bikesJan.treat),
++ label = bikesJan$cnt,
++ nrounds = nrounds,
++ objective = "reg:linear",eta = 0.3, depth = 6)
+```
+
+Pour prédire sur le jeu de données de validation
+
+```r
+bikesFeb.treat <- prepare(treatplan, bikesFeb, varRestriction = newvars)
+bikesFeb$pred <- predict(model, as.matrix(bikesFeb.treat))
+```
