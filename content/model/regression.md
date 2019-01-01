@@ -221,10 +221,12 @@ Une nouvelle grandeur à calculer est le RMS relatif erreur : sqrt(prev - Y)²/Y
 
 ```r
 test %>%
-+ mutate(pred = predict(modIncome, newdata = test),
-+ err = pred - Income) %>%
-+ summarize(rmse = sqrt(mean(err^2)),
-+ rms.relerr = sqrt(mean((err/Income)^2)))
+  mutate(
+    pred = predict(modIncome, newdata = test),
+    err = pred - Income
+    ) %>%
+  summarize(rmse = sqrt(mean(err^2)),
+  rms.relerr = sqrt(mean((err/Income)^2)))
 ```
 
 ## Log model:
@@ -290,13 +292,13 @@ On utilise pour le calculer :
 
 ```r
 glance(model) %>%
-+ summarize(pR2 = 1 - deviance/null.deviance)
+  summarize(pR2 = 1 - deviance/null.deviance)
 
 wrapChiSqTest(model)
 
 test %>%
-+ mutate(pred = predict(model, newdata = test, type = "response")) %>%
-+ wrapChiSqTest("pred","has_dmd", TRUE)
+  mutate(pred = predict(model, newdata = test, type = "response")) %>%
+  wrapChiSqTest("pred","has_dmd", TRUE)
 ```
 
 On peut encore utiliser le Gain curve plot pour voir la performance du modèle
@@ -335,7 +337,7 @@ Pour valider que les prédictions sont OK
 
 ```r
 glance(model) %>%
-+ summarize(pseudoR2 = 1 - deviance/null.deviance)
+  summarize(pseudoR2 = 1 - deviance/null.deviance)
 ```
 Lancer la prévision
 ```r
