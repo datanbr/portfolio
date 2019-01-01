@@ -409,9 +409,10 @@ L'algo du random Forest passe par :
 - on évalue tous les arbres et on prend le meilleur
 
 ```r
-model <- ranger(fmla, bikesJan,
-+ num.trees = 500,
-+ respect.unordered.factors = "order")
+odel <- ranger(fmla,
+                training.treat,
+                num.trees = 500,
+                respect.unordered.factors = "order")
 
 # Si on veut pouvoir reproduire un cas, on doit d'abord fixer le hasard et ensuite l'utiliser
 seed
@@ -420,11 +421,11 @@ seed
                          num.trees = 500,
                          respect.unordered.factors = "order",
                          seed = seed))
-
+```
 num.trees = 500 # au moins à 200
 respect.unordered.factors # permet d'indiquer au modèle comment gérer les factors.
 On peut mettre order ou safe
-```
+
 On peut avoir la prévision en faisant
 bikesFeb$pred <- predict(model, bikesFeb)$predictions
 
@@ -444,18 +445,29 @@ Cela passe par vtreat:
 - preparer() pour cleaner les data
 
 ```r
+#install.packages("vtreat")
+#install.packages("xgboost")
+library(vtreat)
+library(magrittr)
+library(xgboost)
+
 #on selectionne les données à modifier
-vars <- c("x","u")
+vars = names(train_df)
+vars = vars[-length(vars)]
 treatplan <- designTreatmentsZ(dframe, varslist, verbose = FALSE)
 
+dframe = train_df
+treatplan <- designTreatmentsZ(dframe, vars, verbose = FALSE)
 scoreFrame <- treatplan$scoreFrame %>%
-+ select(varName, origName, code))
-(newvars <- scoreFrame %>%
-+ filter(code %in% c("clean","lev")) %>%
-+ use_series(varName))
+  select(varName, origName, code)
+
+newvars <- scoreFrame %>%
+  filter(code %in% c("clean","lev")) %>%
+  use_series(varName)
 
 #newvars contient les données
 training.treat <- prepare(treatmentplan, dframe, varRestriction = newvars)
+test.treat <- prepare(treatplan, test_df, varRestriction = newvars)
 ```
 
 ## Xgboost
@@ -473,10 +485,10 @@ On prépare les datas
 
 ```r
 treatplan <- designTreatmentsZ(bikesJan, vars)
-> newvars <- treatplan$scoreFrame %>%
-+ filter(code %in% c("clean","lev")) %>%
-+ use_series(varName)
-> bikesJan.treat <- prepare(treatplan, bikesJan, varRestriction = newvars)
+newvars <- treatplan$scoreFrame %>%
+  filter(code %in% c("clean","lev")) %>%
+  use_series(varName)
+bikesJan.treat <- prepare(treatplan, bikesJan, varRestriction = newvars)
 ```
 
 Les données pour Xgboost sont :
@@ -488,10 +500,15 @@ Calcul de la meilleur profondeur
 
 ```r
 library(xgboost)
-cv <- xgb.cv(data = as.matrix(bikesJan.treat),
-+ label = bikesJan$cnt,
-+ objective = "reg:linear",
-+ nrounds = 100, nfold = 5, eta = 0.3, max_depth = 6)
+cv <- xgb.cv(data = as.matrix(training.treat),
+             label = train_df$SalePrice,
+             objective = "reg:linear",
+             nrounds = 100,
+             nfold = 5,
+             eta = 0.3,
+             max_depth = 6)
+```
+
 data : données d'entrée X
 lable : données à prévoir
 objective : indique le type de regression. On a ici des données qui évoluent linéairement
@@ -503,6 +520,7 @@ early_stopping_rounds: Aprè combien de round on stope sans amélioration
 verbose: 0 fait le traitement en silence
 
 Pour déterminer le min de profondeur, on fait
+```r
 elog <- as.data.frame(cv$evaluation_log)
 nrounds <- which.min(elog$test_rmse_mean)
 ```
@@ -510,10 +528,13 @@ nrounds <- which.min(elog$test_rmse_mean)
 Lancement du modèle
 
 ```r
-model <- xgboost(data = as.matrix(bikesJan.treat),
-+ label = bikesJan$cnt,
-+ nrounds = nrounds,
-+ objective = "reg:linear",eta = 0.3, depth = 6)
+model <- xgboost(
+  data = as.matrix(training.treat),
+  label = train_df$SalePrice,
+  nrounds = nrounds,
+  objective = "reg:linear",
+  eta = 0.3,
+  depth = 6)
 ```
 
 Pour prédire sur le jeu de données de validation
