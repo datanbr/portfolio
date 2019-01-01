@@ -409,7 +409,7 @@ L'algo du random Forest passe par :
 - on évalue tous les arbres et on prend le meilleur
 
 ```r
-odel <- ranger(fmla,
+model <- ranger(fmla,
                 training.treat,
                 num.trees = 500,
                 respect.unordered.factors = "order")
