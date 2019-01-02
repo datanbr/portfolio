@@ -1,5 +1,5 @@
 ---
-title: "Modèle GAM Recap "
+title: "Processus d'analyse des données "
 date: 2018-10-13T19:00:33+02:00
 draft: false
 image: "/upload/formation.jpeg"
