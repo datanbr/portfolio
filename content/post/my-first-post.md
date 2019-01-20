@@ -10,21 +10,21 @@ tags: ["project"]
 
 ## Comprendre les 4 grands métiers de la Data
 
-La majorité des gens qui veulent devenir Data Scientist ne savent pas les différents types d'emploi que proposent le Domaine de la Data.
+La majorité des gens qui veulent devenir Data Scientist ne connaissent pas les différents types d'emploi que propose le domaine de la Data.
 Heureusement je vais vous expliquer clairement tous les métiers de ce magnifique domaine pour que vous puissiez choisir ce que vous voulez vraiment faire.
 
 ## Découvrez les 8 grands domaines où vous devez monter en compétence
 
-Vous savez mainteant que vous voulez devenir Data Scientist ? Oui mais par où commencer ? Je vais vous expliquer le quotidien d'un Data Scientist et les 8 compétences que vous devez acquérir pour :
+Vous savez maintenant que vous voulez devenir Data Scientist ? Oui mais par où commencer ? Je vais vous expliquer le quotidien d'un Data Scientist et les 8 compétences que vous devez acquérir pour :
 
 - Répondre aux questions lors des entretiens d'embauche
 
-- Etre alaise dans votre futur métier
+- Etre à l'aise dans votre futur métier
 
 
 ## Mettre en place un programme sur 4 semaines pour acquérir les premières bases
 
-Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et quelle resource avez vous à votre disposition ? Je vais vous donner un programmepour que vous puissiez monter en compétence rapidement et facilement pour acquérir les bases de la discipline.
+Vous savez maintenant ce que vous devez apprendre. Mais dans quel ordre ? Et quelles resources avez-vous à votre disposition ? Je vais vous donner un programmepour que vous puissiez monter en compétences rapidement et facilement pour acquérir les bases de la discipline.
 
 <!-- Begin Mailchimp Signup Form -->
 <link href="//cdn-images.mailchimp.com/embedcode/horizontal-slim-10_7.css" rel="stylesheet" type="text/css">
